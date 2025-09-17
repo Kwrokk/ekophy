@@ -1,0 +1,12 @@
+{
+  "usuarios": [o
+    {
+      "id": "2",
+      "nome": "Nadla",
+      "email": "dev@nadla.com",
+      "senha": "senha1234"
+    }
+  ],
+  "artigos": [
+  ]
+}

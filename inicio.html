@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Netphy - Home</title>
+</head>
+<body style="color: white;">
+    <div style="background-color: #A61E4B; border-radius: 15px; margin: 50px auto; width: 50%;">
+        <div style="margin: auto; width: 75%;">
+            <h1>Bem-vind@ de volta<span id="mostraNomeDoUsuario"></span>!</h1>
+            <a id="novoArtigoLink">Escrever um novo artigo</a>
+        </div>
+        <div class="m-auto w-75">
+            <h2>Artigos</h2>
+            <div id="mostraArtigos"></div>
+        </div>
+    </div>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        
+        const mostraNomeDoUsuario = document.getElementById("mostraNomeDoUsuario");
+        mostraNomeDoUsuario.textContent = ", " + params.get("nome");
+        
+        const novoArtigoLink = document.getElementById("novoArtigoLink");
+        novoArtigoLink.href = "escreverArtigo.html?nome=" + params.get("nome");
+    </script>
+    <script>
+        const mostraArtigos = document.getElementById("mostraArtigos");
+        axios.get("http://localhost:3000/artigos")
+        .then(res => {
+            let artigos = res.data;
+            let qtdArtigos = artigos.length;
+
+            for (let i = 0; i < qtdArtigos; i++) {
+                const novaDiv = document.createElement("div");
+
+                const tituloDoArtigulo = document.createElement("h3");
+                tituloDoArtigulo.textContent = artigos[i].titulo;
+                
+                const nomeDoAutor = document.createElement("p");
+                nomeDoAutor.textContent = "Autor: " + artigos[i].autor;
+                
+                const linkLerArtigo = document.createElement("a");
+                linkLerArtigo.textContent = "Ler Artigo";
+                linkLerArtigo.href = `lerArtigo.html?idArtigo=${artigos[i].id}&nome=${params.get("nome")}`;
+                
+                novaDiv.appendChild(tituloDoArtigulo);
+                novaDiv.appendChild(nomeDoAutor);
+                novaDiv.appendChild(linkLerArtigo);
+                mostraArtigos.appendChild(novaDiv)
+                
+            }
+        })
+        .catch(err => {
+            alert("Tente novamente.");
+        })
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>
