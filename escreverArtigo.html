@@ -18,7 +18,10 @@
         </form>
     </div>
 
-    <script>
+    <script> 
+        const titulo = document.getElementById("titulo");
+        const conteudo = document.getElementById("conteudo");
+        
         function salvarArtigo(titulo, conteudo) {
             const params = new URLSearchParams(window.location.search)
             const nomeDoAutor = params.get("nome");
@@ -34,8 +37,7 @@
                 alert("Tente novamente");
             })
         }
-        const titulo = document.getElementById("titulo");
-        const conteudo = document.getElementById("conteudo");
+       
         
         const botaoPublicar = document.getElementById("botaoPublicar");
         botaoPublicar.addEventListener("click", () => salvarArtigo(titulo.value, conteudo.value));
